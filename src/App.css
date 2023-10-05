@@ -1,0 +1,40 @@
+@font-face {
+  font-family: Barlow;
+  src: url(Barlow-Bold.ttf);
+  font-weight: bold;
+}
+
+#root {
+  display: flex;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: auto;
+}
+
+.container-chat {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: auto;
+}
+
+.container-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position:fixed;    
+  top:20px;
+  font-size: 24px;
+  width: 100%;  
+  padding: 20px 0px 20px 0px;
+  margin: -20px 0px 0px 0px;
+  text-align: center;
+  font-family: Barlow;
+  background-color: #6FBCA4;
+}

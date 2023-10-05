@@ -1,0 +1,42 @@
+.textbar {
+    display: flex;
+    align-items: stretch;
+    bottom:50px;
+    width: 450px;
+    background-color: #A47729;
+  }
+
+  .container-textbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position:fixed;    
+    bottom:20px;
+    width: 100%;  
+    padding: 10px 0px 20px 0px;
+    margin: -20px 0px -20px 0px;
+    text-align: center;
+    background-color: #A47729;
+  }
+  
+  .textbar-input {
+    flex-grow: 1;
+    box-sizing: border-box;
+    font-family: Barlow;
+    font-size: 22px;
+    text-align: center;
+    border: 3px solid #000000;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .textbar-send {
+    height: 70px;
+    align-self: center;        
+    border-radius:100%;
+    padding: 7px 10px 10px 10px;
+    border: 3px solid #000000;
+    background-color: #FBB336;
+    font-size: 50px;
+  }
