@@ -1,3 +1,10 @@
+## Hugging Face Model
+### speech-to-text
+- https://huggingface.co/jonatasgrosman/wav2vec2-large-xlsr-53-finnish.
+### text-to-speech
+- https://huggingface.co/facebook/mms-tts-fin.
+
+
 ## Backend Structure
 
 - `Backend`: The backend of the project, responsible for processing and managing data.
