@@ -7,8 +7,7 @@ import { registerOnMessageCallback, send } from './websocket'
 
 export class App extends React.Component {
   state = {
-    messages: [],
-    showLandingPage: true, // change between landing page and chat
+    messages: []
   };
 
   constructor (props) {
@@ -19,8 +18,7 @@ export class App extends React.Component {
   onMessageReceived (msg) {
     msg = JSON.parse(msg)
     this.setState((prevState) => ({
-      messages: prevState.messages.concat(msg),
-      showLandingPage: false, // tried to make this change the page but it didn't work
+      messages: prevState.messages.concat(msg)
     }));
   }
 
@@ -37,29 +35,15 @@ export class App extends React.Component {
   render() {
     const sendMessage = this.sendMessage.bind(this)
 
-    if (this.state.showLandingPage) {
+    if (this.state.messages.length === 0) {
       return (
-        <div className='container-landing'>
-            <img src='FiLOS.png' width="200"></img>
-            <h1>Welcome to FiLOs!</h1>
-            <p>Your Finnish AI assistant.</p>
-            <p></p>
-            <div className='textbar-landing'>
-              <input placeholder='Enter your message here...' className='textbar-input' type='text' ref={this.input} />
-              
-            </div>
-            <p><b>or</b></p>
-            <div className='mic'>
-              <button className='textbar-send' onClick={sendMessage}>
-              <img src={mic} width={70} height={70}/>
-              </button>
-            </div>
-            <p>Speak with FiLOs</p>
-        </div>
+        <>
+        <TextBar onSend={sendMessage} landing={true}/>
+        </>
       );
     } 
-    
-    else {
+    else
+    {
       return (
         <>                  
         <div className='container'>        
@@ -69,7 +53,7 @@ export class App extends React.Component {
           <div className='container-chat'>        
           <MessageWindow messages={this.state.messages} />        
           </div>
-          <TextBar onSend={sendMessage} />
+          <TextBar onSend={sendMessage}  landing={false}/>
         </div>
         </>
       )
