@@ -1,3 +1,12 @@
+## Docker Commands
+```bash
+docker-compose build
+docker-compose up
+```
+
+
+
+
 ## Hugging Face Model
 ### speech-to-text
 - https://huggingface.co/jonatasgrosman/wav2vec2-large-xlsr-53-finnish.
