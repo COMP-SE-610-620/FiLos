@@ -1,0 +1,11 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .  # Use the current directory as the build context
+    ports:
+      - "8000:8000"  # Map host port 8000 to container port 8000
+    volumes:
+      - .:/backend  # Mount the current directory to /app in the container
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    
