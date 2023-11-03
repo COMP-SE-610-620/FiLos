@@ -1,7 +1,7 @@
 import React from 'react'
 import './MessageWindow.css'
 
-const Message = ({ text, username, self }) => (
+const Message = ({ text, self }) => (
   <div className={'message' + (self ? ' message-self' : '')}>    
     <div className='message-text'>{text}</div>
   </div>
@@ -17,11 +17,11 @@ export default class MessageWindow extends React.Component {
     messageWindow.scrollTop = messageWindow.scrollHeight - messageWindow.clientHeight
   }
   render () {
-    const { messages = [], username } = this.props
+    const { messages = [] } = this.props
     return (
       <div className='message-window' ref={this.messageWindow}>
         {messages.map((msg, i) => {
-          return <Message key={i} text={msg.text} self={true} />
+          return <Message key={i} text={msg.text} self={msg.self} />
         })}
         <div>&nbsp;</div>
       </div>
