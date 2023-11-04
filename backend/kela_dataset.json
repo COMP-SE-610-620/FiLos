@@ -1,11 +1,15 @@
 [
     {
         "question": "Kuka voi saada opintotukea?",
-        "answer": "Voit saada opintotukea opintoihisi peruskoulun jälkeen. Opintotukea voidaan myöntää myös aikuisten perusopetukseen. Voit saada opintotukea, jos\n\n\t- opiskelet päätoimisesti ja opintojen kokonaiskesto on vähintään 2 kuukautta\n\t- edistyt opinnoissasi riittävästi ja\n\t- tarvitset taloudellista tukea.\n\nVoit saada opintotukea myös ulkomailla opiskeluun, jos opinnot vastaavat opintotukeen oikeuttavia opintoja Suomessa tai ne sisältyvät Suomessa suoritettaviin opintoihin."
+        "answer": "Voit saada opintotukea opintoihisi peruskoulun jälkeen. Opintotukea voidaan myöntää myös aikuisten perusopetukseen. Voit saada opintotukea, jos opiskelet päätoimisesti ja opintojen kokonaiskesto on vähintään 2 kuukautta, edistyt opinnoissasi riittävästi, sekä tarvitset taloudellista tukea. Voit saada opintotukea myös ulkomailla opiskeluun, jos opinnot vastaavat opintotukeen oikeuttavia opintoja Suomessa tai ne sisältyvät Suomessa suoritettaviin opintoihin."
+    },
+    {
+        "question": "Kuinka paljon voin saada opintotukea?",
+        "answer": "Opintorahan määrään vaikuttavat: minkä ikäinen olet, miten asut, oletko naimisissa, onko sinulla lapsia. Pienimmät opintorahat ovat 8–43 euroa kuukaudessa. Pientä opintorahaa voi saada 17–19-vuotias opiskelija, joka asuu vanhempansa luona. Lapsettoman opiskelijan suurin mahdollinen opintoraha on noin 279 euroa kuukaudessa. "
     },
     {
         "question": "Kuka voi saada ateriatukea?",
-        "answer": "Voit saada ateriatukea, jos suoritat Suomessa\n\t- alempaa korkeakoulututkintoa\n\t- ylempää korkeakoulututkintoa\n\t- ammattikorkeakoulututkintoa\n\t- ylempää ammattikorkeakoulututkintoa\n\t- korkeakoulussa opintotukeen oikeuttavaa ammatillista tai erikoistumiskoulutusohjelmaa.\nVoit saada ateriatukea, vaikka et ole Suomen kansalainen. Jos olet vaihto-opiskelijana suomalaisessa korkeakoulussa, saat ateriatukea vaihto-opiskelun ajan.\n\nEt saa ateriatukea seuraavissa tilanteissa:\n\t- Suoritat Suomessa vain ulkomaiseen korkeakoulututkintoon liittyvää työharjoittelua.\n\t- Opiskelet Suomessa ulkomaisessa tai yksityisessä korkeakoulussa (esimerkiksi Estonian Business School).\n\t- Opiskelet tilauskoulutuksessa.\n\t- Et opiskele korkeakoulussa."
+        "answer": "Voit saada ateriatukea, jos suoritat Suomessa alempaa korkeakoulututkintoa, ylempää korkeakoulututkintoa, ammattikorkeakoulututkintoa, ylempää ammattikorkeakoulututkintoa tai korkeakoulussa opintotukeen oikeuttavaa ammatillista tai erikoistumiskoulutusohjelmaa. Voit saada ateriatukea, vaikka et ole Suomen kansalainen. Jos olet vaihto-opiskelijana suomalaisessa korkeakoulussa, saat ateriatukea vaihto-opiskelun ajan. Et saa ateriatukea seuraavissa tilanteissa: Suoritat Suomessa vain ulkomaiseen korkeakoulututkintoon liittyvää työharjoittelua. Opiskelet Suomessa ulkomaisessa tai yksityisessä korkeakoulussa (esimerkiksi Estonian Business School). Opiskelet tilauskoulutuksessa. Et opiskele korkeakoulussa."
     },
     {
         "question": "Kuinka suuri ateriatuki on?",
@@ -13,6 +17,34 @@
     },
     {
         "question": "Kuka voi saada yleistä asumistukea?",
-        "answer": "Voit saada Kelasta yleistä asumistukea, jos tulosi ovat pienet. Asumistuen tarkoitus on auttaa sinua asumismenojen maksamisessa. Tukea voi saada\n\t- vuokra-asuntoon\n\t- omistusasuntoon\n\t- asumisoikeusasuntoon\n\t- osaomistusasuntoon.\n\nOpiskelijat saavat asumistukea samoilla ehdoilla kuin muutkin tuen saajat."
+        "answer": "Voit saada Kelasta yleistä asumistukea, jos tulosi ovat pienet. Asumistuen tarkoitus on auttaa sinua asumismenojen maksamisessa. Tukea voi saada vuokra-asuntoon, omistusasuntoon, asumisoikeusasuntoon, osaomistusasuntoon. Opiskelijat saavat asumistukea samoilla ehdoilla kuin muutkin tuen saajat."
+    },
+    {
+        "question": "Kuinka paljon voin saada asumistukea?",
+        "answer": "Asumistuki voi olla korkeintaan 80 % asumismenoista. Tukea voi saada esimerkiksi vuokraan tai vastikkeeseen. Asumismenoilla on yläraja eli suurin asumismenojen euromäärä, jonka perusteella asumistukea voi saada. Asumistukeen vaikuttavat ruokakunnan kaikkien jäsenten tulot. Tuen määrään vaikuttavat ansiotulot, pääomatulot ja useat etuudet. Tulot otetaan huomioon bruttona eli ennen verojen vähentämistä."
+    },
+    {
+        "question": "Kenen täytyy maksaa terveydenhoitomaksu?",
+        "answer": "Korkeakouluopiskelijan terveydenhoitomaksun maksuvelvollisuuteen vaikuttavat vain suoritettava tutkinto, läsnäolevaksi ilmoittautuminen ja se, minkä maan sosiaaliturvaan kuuluu. Sinun täytyy maksaa terveydenhoitomaksu, jos olet ilmoittautunut läsnä olevaksi ja opiskelet ammattikorkeakoulussa ja suoritat ammattikorkeakoulututkintoa, ylempää ammattikorkeakoulututkintoa tai Poliisiammattikorkeakoulun ammattikorkeakoulututkintoa, tai opiskelet yliopistossa ja suoritat alempaa tai ylempää korkeakoulututkintoa, tai jos opiskelet Maanpuolustuskorkeakoulun viranomaisyhteistyön koulutusohjelmassa (SMVIR) eli olet Maanpuolustuskorkeakoulun niin sanottu siviiliopiskelija."
+    },
+    {
+        "question": "Kuinka paljon terveydenhoitomaksu maksaa?",
+        "answer": "Vuonna 2023 korkeakouluopiskelijan terveydenhoitomaksu on 36,80 euroa lukukaudessa. Sinun täytyy maksaa se Kelalle sekä kevät- että syyslukukaudelta. Sinulle ei lähetetä laskua, vaan maksu pitää maksaa oma-aloitteisesti. Maksettava summa määritellään valtioneuvoston asetuksella, ja se voi muuttua vuosittain."
+    },
+    {
+        "question": "Miten käy, jos en maksa terveydenhoitomaksua?",
+        "answer": "Jos et maksa terveydenhoitomaksua eräpäivään mennessä, Kela muistuttaa maksun maksamisesta. Jos terveydenhoitomaksu maksetaan eräpäivän jälkeen, Kela perii 5 euron kiinteän viivästymismaksun. Jos et maksa terveydenhoitomaksua maksumuistutuksen jälkeenkään, Kela voi kuitata eli vähentää maksun ja viivästymismaksun opintorahasta ilman suostumustasi. Jos maksua ei saada kuitattua opintorahasta, terveydenhoitomaksu siirretään lain perusteella ulosottoon."
+    },
+    {
+        "question": "Vaikuttavatko opiskelijan omat tulot opintotukeen?",
+        "answer": "Tulosi vaikuttavat siihen, kuinka monelta kuukaudelta vuodessa voit nostaa opintotukea. Sinun pitää itse huolehtia siitä, etteivät vuositulosi ylitä vuositulorajaasi. Kela huomioi veronalaiset bruttotulosi ja ulkomailta saamasi tulot."
+    },
+    {
+        "question": "Kuinka paljon voin saada tuloja?",
+        "answer": "Jos nostat opintotukea vuoden aikana, sinulla on kalenterivuodelle henkilökohtainen vuosituloraja. Vuositulorajasi määräytyy sen perusteella, kuinka monelta kuukaudelta olet nostanut opintotukea kalenterivuoden aikana. Voit tarkistaa vuositulorajasi OmaKelassa. Kirjaudu OmaKelaan verkkopankkitunnuksilla tai mobiilivarmenteella. Voit myös arvioida vuositulorajaasi opiskelijan omien tulojen laskureilla. Voit saada tulot milloin tahansa kalenterivuoden aikana, kunhan ne eivät ylitä vuositulorajaasi. "
+    },
+    {
+        "question": "Miten käy, jos ylitän vuositulorajan?",
+        "answer": "Jos vuositulorajasi ylittyy esitäytetyn veroilmoituksen eli verotuksen ennakkotietojen mukaan, voit joutua palauttamaan opintotukea. Tässä tilanteessa Kela lähettää sinulle asiasta viestin, jossa kerrotaan myös palautuksen määräajasta.  Viesti lähetetään huhtikuussa niille opintotuen saajille, jotka ovat antaneet Kelalle luvan viestien lähettämiseen. Voit antaa luvan OmaKelassa kohdassa Päivitä omia tietojasi."
     }
 ]

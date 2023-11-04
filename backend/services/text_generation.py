@@ -111,7 +111,7 @@ class TextGenerationService:
         embedded_question = self.sentence_embedding(input_question)
         hit = semantic_search(embedded_question, self.embedded_questions, top_k=1)[0][0]
 
-        if hit["score"] > 0.7:
+        if hit["score"] > 0.8:
             closest_question = self.questions[hit["corpus_id"]]
             if closest_question in self.qa_dict:
                 return self.qa_dict[closest_question]
