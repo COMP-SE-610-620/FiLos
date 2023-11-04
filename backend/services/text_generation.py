@@ -3,6 +3,7 @@ import torch
 from transformers import AutoTokenizer, AutoModel
 from sentence_transformers.util import semantic_search
 
+MODEL_PATH = "./models/sbert-cased-finnish-paraphrase/0_BERT/"
 
 class TextGenerationService:
     """
@@ -28,10 +29,8 @@ class TextGenerationService:
         Returns:
             tuple: The QA model and tokenizer.
         """
-        tokenizer = AutoTokenizer.from_pretrained(
-            "TurkuNLP/sbert-cased-finnish-paraphrase"
-        )
-        model = AutoModel.from_pretrained("TurkuNLP/sbert-cased-finnish-paraphrase")
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+        model = AutoModel.from_pretrained(MODEL_PATH)
         return model, tokenizer
 
     def load_qa_data(self):
@@ -94,7 +93,7 @@ class TextGenerationService:
         )
         with torch.no_grad():
             model_output = self.qa_model(**encoded_input)
-        sentence_embeddings = self.mean_pooling(
+            sentence_embeddings = self.mean_pooling(
             model_output, encoded_input["attention_mask"]
         )
         return sentence_embeddings
