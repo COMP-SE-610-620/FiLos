@@ -1,0 +1,18 @@
+[
+    {
+        "question": "Kuka voi saada opintotukea?",
+        "answer": "Voit saada opintotukea opintoihisi peruskoulun jälkeen. Opintotukea voidaan myöntää myös aikuisten perusopetukseen. Voit saada opintotukea, jos\n\n\t- opiskelet päätoimisesti ja opintojen kokonaiskesto on vähintään 2 kuukautta\n\t- edistyt opinnoissasi riittävästi ja\n\t- tarvitset taloudellista tukea.\n\nVoit saada opintotukea myös ulkomailla opiskeluun, jos opinnot vastaavat opintotukeen oikeuttavia opintoja Suomessa tai ne sisältyvät Suomessa suoritettaviin opintoihin."
+    },
+    {
+        "question": "Kuka voi saada ateriatukea?",
+        "answer": "Voit saada ateriatukea, jos suoritat Suomessa\n\t- alempaa korkeakoulututkintoa\n\t- ylempää korkeakoulututkintoa\n\t- ammattikorkeakoulututkintoa\n\t- ylempää ammattikorkeakoulututkintoa\n\t- korkeakoulussa opintotukeen oikeuttavaa ammatillista tai erikoistumiskoulutusohjelmaa.\nVoit saada ateriatukea, vaikka et ole Suomen kansalainen. Jos olet vaihto-opiskelijana suomalaisessa korkeakoulussa, saat ateriatukea vaihto-opiskelun ajan.\n\nEt saa ateriatukea seuraavissa tilanteissa:\n\t- Suoritat Suomessa vain ulkomaiseen korkeakoulututkintoon liittyvää työharjoittelua.\n\t- Opiskelet Suomessa ulkomaisessa tai yksityisessä korkeakoulussa (esimerkiksi Estonian Business School).\n\t- Opiskelet tilauskoulutuksessa.\n\t- Et opiskele korkeakoulussa."
+    },
+    {
+        "question": "Kuinka suuri ateriatuki on?",
+        "answer": "Ateriatuki on 2,55 euroa aterialta. Opiskelijaravintola vähentää tuen aterian hinnasta, eli maksat ateriastasi tuen verran vähemmän. Voit saada ateriatuen vain yhteen ateriaan päivässä."
+    },
+    {
+        "question": "Kuka voi saada yleistä asumistukea?",
+        "answer": "Voit saada Kelasta yleistä asumistukea, jos tulosi ovat pienet. Asumistuen tarkoitus on auttaa sinua asumismenojen maksamisessa. Tukea voi saada\n\t- vuokra-asuntoon\n\t- omistusasuntoon\n\t- asumisoikeusasuntoon\n\t- osaomistusasuntoon.\n\nOpiskelijat saavat asumistukea samoilla ehdoilla kuin muutkin tuen saajat."
+    }
+]
