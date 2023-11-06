@@ -14,27 +14,7 @@ export class App extends React.Component {
     this.setState((prevState) => ({
       messages: prevState.messages.concat(msg)
     }));
-  }
-
-  speakThis = (text) => {
-    fetch('http://localhost:8000/text-to-speech', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: new URLSearchParams({
-        text_input: text,
-      }),
-    })
-      .then(response => response.blob())
-      .then(blob => {
-        // Process the received audio file (blob)
-        // For example, play the audio or save to storage
-      })
-      .catch(error => {
-        console.error('Error in GET request:', error);
-      });
-    }
+  }  
 
   sendMessage (text) {
     if (text !== '')
@@ -81,8 +61,8 @@ export class App extends React.Component {
     else
     {
       return (
-        <>                  
-        <div className='container'>        
+        <>                          
+        <div className='container'>                
           <div className='container-title'>
             <b>FiLOS Test</b>
           </div>
