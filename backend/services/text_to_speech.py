@@ -51,7 +51,7 @@ import torch
 from scipy.io import wavfile
 import io
 
-MODEL_PATH = "./models/facebook_mms_tts_fin/"
+MODEL_PATH = "facebook/mms-tts-fin"
 
 class TextToSpeechService:
     """

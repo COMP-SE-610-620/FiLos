@@ -1,7 +1,7 @@
 from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC
 import torch
 
-MODEL_PATH = "./models/speech_recognition/"
+MODEL_PATH = "jonatasgrosman/wav2vec2-large-xlsr-53-finnish"
 
 class SpeechRecognitionService:
     """
