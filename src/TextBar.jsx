@@ -32,7 +32,7 @@ export default class TextBar extends Component {
             <input placeholder='Enter your message here...' className='textbar-input' type='text' ref={this.input} onKeyDown={sendMessageIfEnter} />
             </div>
             <p><b>or</b></p>
-            <button className='textbar-send-landing' onClick={sendMessage}>
+            <button className='textbar-mic-landing' onClick={sendMessage}>
             <img src={mic} width={70} height={70}/>
             </button>
             <p>Speak with FiLOs</p>
@@ -45,7 +45,7 @@ export default class TextBar extends Component {
           <div className='container-textbar'>        
           <div className='textbar'>
             <input placeholder='Enter your message here...' className='textbar-input' type='text' ref={this.input} onKeyDown={sendMessageIfEnter} />
-            <button className='textbar-send' onClick={sendMessage}>
+            <button className='textbar-mic' onClick={sendMessage}>
             <img src={mic} width={40} height={40}/>
             </button>
           </div>

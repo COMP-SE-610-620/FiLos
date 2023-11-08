@@ -1,34 +1,50 @@
 import React from 'react'
 import './App.css'
-import mic from "./mic.png"
 import MessageWindow from './MessageWindow'
 import TextBar from './TextBar'
-import { registerOnMessageCallback, send } from './websocket'
 
 export class App extends React.Component {
   state = {
-    messages: []
+    messages: [],
+    isSelf: true
   };
 
-  constructor (props) {
-    super(props)
-    registerOnMessageCallback(this.onMessageReceived.bind(this))
-  }
-
-  onMessageReceived (msg) {
+  onNewMessage (msg) {
     msg = JSON.parse(msg)
     this.setState((prevState) => ({
       messages: prevState.messages.concat(msg)
     }));
-  }
+  }  
 
   sendMessage (text) {
-    if (text != '')
+    if (text !== '')
     {
-    const message = {
-      text: text
+    const ourMessage = {
+      text: text,
+      self: true
     }
-    send(JSON.stringify(message))
+    this.onNewMessage(JSON.stringify(ourMessage));
+
+    const formData = new FormData();
+    formData.append("text_input", text);
+
+    // POST to backend when a new message is sent
+    fetch('http://localhost:8000/chat', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {        
+        console.log('Response from FiLOs:', data.response);
+        const filosMessage = {
+          text: data.response,
+          self: false
+        }
+        this.onNewMessage(JSON.stringify(filosMessage));
+      })
+      .catch(error => {
+        console.error('Error sending message:', error);
+      });
   }
   }
 
@@ -45,8 +61,8 @@ export class App extends React.Component {
     else
     {
       return (
-        <>                  
-        <div className='container'>        
+        <>                          
+        <div className='container'>                
           <div className='container-title'>
             <b>FiLOS Test</b>
           </div>
