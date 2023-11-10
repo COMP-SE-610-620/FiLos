@@ -26,31 +26,26 @@ def hello():
     return "FinGPT"
 
 
-@router.post("/chat")
-async def process_input(
-    file: UploadFile = File(None),
-    text_input: str = Form(None),
-):
-    if file and file.content_type.startswith("audio/"):
+@router.post("/chat/text")
+async def process_text_input(text_input: str = Form(...)):
+    # Get response from TextGenerationService for text input
+    response = text_generation_service.answer_question(text_input)
+    return {"question": text_input, "response": response}
+
+
+@router.post("/chat/speech")
+async def process_speech_input(file: UploadFile = File(...)):
+    if file.content_type.startswith("audio/"):
         # Handle audio file input (speech)
         audio_data = sf.read(io.BytesIO(await file.read()))[0]
         asr_service = SpeechRecognitionService()
         converted_text = asr_service.transcribe_audio(audio_data)
-
+        
         # Get response from TextGenerationService
-        response = text_generation_service.answer_question([converted_text])
-        return {"response": response}
-
-    elif text_input:
-        # Handle text input
-
-        # Get response from TextGenerationService
-        response = text_generation_service.answer_question([text_input])
-        return {"response": response}
-
+        response = text_generation_service.answer_question(converted_text)
+        return {"question": converted_text, "response": response}
     else:
-        return {"error": "Invalid input. Provide either an audio file or text."}
-
+        return {"error": "Invalid input. Provide an audio file with the 'audio/' content type."}
 
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
