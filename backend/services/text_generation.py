@@ -41,7 +41,7 @@ class TextGenerationService:
             tuple: Lists of questions, answers, a dictionary mapping questions to answers,
                    and embeddings of the questions.
         """
-        qa_dataset_path = "/backend/kela_dataset.json"
+        qa_dataset_path = "./kela_dataset.json"
         with open(qa_dataset_path, "r", encoding="utf-8") as file:
             data = json.load(file)
 
