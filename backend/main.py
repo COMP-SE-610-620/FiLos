@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 # Define the list of allowed origins (replace "*" with your frontend's actual URL)
-origins = ["http://localhost:3000,"]
+origins = ["http://localhost:3000"]
 
 # Add the CORS middleware to your FastAPI app
 app.add_middleware(
