@@ -29,22 +29,23 @@ export class App extends React.Component {
     formData.append("text_input", text);
 
     // POST to backend when a new message is sent
-    fetch('http://localhost:8000/chat', {
+    fetch('http://localhost:8000/chat/text', {
       method: 'POST',
       body: formData,
-    })
-      .then(response => response.json())
-      .then(data => {        
-        console.log('Response from FiLOs:', data.response);
-        const filosMessage = {
-          text: data.response,
-          self: false
-        }
-        this.onNewMessage(JSON.stringify(filosMessage));
       })
-      .catch(error => {
-        console.error('Error sending message:', error);
-      });
+    .then(response => response.json())
+    .then(data => {        
+      console.log('Response from FiLOs:', data.response);
+      const filosMessage = {
+        text: data.response,
+        self: false
+      };
+      this.onNewMessage(JSON.stringify(filosMessage));
+    })
+    .catch(error => {
+      console.error('Error sending message:', error);
+    });
+
   }
   }
 
