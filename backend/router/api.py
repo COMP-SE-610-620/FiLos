@@ -1,6 +1,7 @@
 from fastapi import APIRouter, File, WebSocket, UploadFile, Form, Response
 import soundfile as sf
 import io
+import os
 from pydub import AudioSegment
 
 from services import (
@@ -48,8 +49,8 @@ async def process_speech_input(file: UploadFile = File(...)):
             audio.export("temp.wav", format="wav")
             audio_data = sf.read("temp.wav")[0]
             # Delete the temporary files after use
-            # os.remove("temp.webm")
-            # os.remove("temp.wav")
+            os.remove("temp.webm")
+            os.remove("temp.wav")
         else:
             audio_data = sf.read(io.BytesIO(audio_bytes))[0]
         
