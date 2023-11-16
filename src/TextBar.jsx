@@ -13,7 +13,7 @@ const VoiceRecorder = ({ sendingMessage }) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setAudioStream(stream);
-      const recorder = new MediaRecorder(stream);
+      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' }); // Specify MIME type
       setMediaRecorder(recorder);
 
       recorder.ondataavailable = (e) => {
@@ -21,22 +21,22 @@ const VoiceRecorder = ({ sendingMessage }) => {
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });      
-          const formData = new FormData();
-          formData.append('file', audioBlob);
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const formData = new FormData();
+        formData.append('file', audioBlob, 'audio.webm');
       
-          fetch('http://localhost:8000/chat/speech', {
-            method: 'POST',
-            body: formData,
-          })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Response from FiLOs:', data.response);
-              sendingMessage(JSON.stringify(data.response));
-            })
-            .catch(error => {
-              console.error('Error sending message:', error);
-            });
+        fetch('http://localhost:8000/chat/speech', {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Response from FiLOs:', data.response);
+          sendingMessage(JSON.stringify(data.response));
+        })
+        .catch(error => {
+          console.error('Error sending message:', error);
+        });
       };
       recorder.start();
       setRecording(true);
