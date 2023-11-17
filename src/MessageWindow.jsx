@@ -30,22 +30,38 @@ const Message = ({ text, self }) => {
     const url = new URL('http://localhost:8000/text-to-speech');
     url.searchParams.append('text_input', text);    
 
-    fetch(url.toString())
-      .then(response => response.blob())
-      .then(blob => {        
-        const fileReader = new FileReader();
-        fileReader.onload = function () {
+    const fetchAndCacheAudio = async () => {
+      try {
+        const cache = await caches.open('audio-cache');
+        const response = await cache.match(url.toString());
+
+        if (response) {
+          const audioBuffer = await response.arrayBuffer();
           const audioContext = new AudioContext();
-          const arrayBuffer = this.result;
+        } else {
+          const fetchResponse = await fetch(url.toString());
+          const blob = await fetchResponse.blob();
+
+          const cacheResponse = new Response(blob);
+          await cache.put(url.toString(), cacheResponse);
+
+          const arrayBuffer = await blob.arrayBuffer();
+          const audioContext = new AudioContext();
           audioContext.decodeAudioData(arrayBuffer, playAudio);
-        };
-        fileReader.readAsArrayBuffer(blob);
+        }
+
         setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error in GET request:', error);
-      });
+      } catch (error) {
+        console.error('Error in GET request', error);
+      }
   };
+
+  return new Promise((resolve) => {
+    fetchAndCacheAudio().then(() => {
+      resolve();
+    });
+  });
+};
 
   return (
     <>
