@@ -59,8 +59,78 @@ async def process_speech_input(file: UploadFile = File(...)):
     # Get response from TextGenerationService
     response = text_generation_service.answer_question(converted_text)
     return {"question": converted_text, "response": response}
+
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
     tts_service = TextToSpeechService()
-    audio_data = tts_service.text_to_speech(text_input)
+    finnish_text = finnish_number_to_text(text_input)
+    audio_data = tts_service.text_to_speech(finnish_text)
     return Response(content=audio_data.getvalue(), media_type="audio/wav")
+
+
+def finnish_number_to_text(input_str):
+    def convert_number_to_text(number):
+        if number == 0:
+            return 'nolla'
+
+        finnish_numbers = {
+            1: 'yksi',
+            2: 'kaksi',
+            3: 'kolme',
+            4: 'neljä',
+            5: 'viisi',
+            6: 'kuusi',
+            7: 'seitsemän',
+            8: 'kahdeksan',
+            9: 'yhdeksän',
+            10: 'kymmenen',
+            11: 'yksitoista',
+            12: 'kaksitoista',
+            13: 'kolmetoista',
+            14: 'neljätoista',
+            15: 'viisitoista',
+            16: 'kuusitoista',
+            17: 'seitsemäntoista',
+            18: 'kahdeksantoista',
+            19: 'yhdeksäntoista',
+            20: 'kaksikymmentä',
+            30: 'kolmekymmentä',
+            40: 'neljäkymmentä',
+            50: 'viisikymmentä',
+            60: 'kuusikymmentä',
+            70: 'seitsemänkymmentä',
+            80: 'kahdeksankymmentä',
+            90: 'yhdeksänkymmentä',
+            100: 'sata',
+            200: 'kaksisataa',
+            300: 'kolmesataa',
+            400: 'neljäsataa',
+            500: 'viisisataa',
+            600: 'kuusisataa',
+            700: 'seitsemänsataa',
+            800: 'kahdeksansataa',
+            900: 'yhdeksänsataa',
+            1000: 'tuhat'
+        }
+
+        if 1 <= number <= 1000:
+            result = []
+            for base in sorted(finnish_numbers.keys(), reverse=True):
+                count = number // base
+                if count:
+                    result.append(finnish_numbers[base])
+                    number %= base
+
+            return ' '.join(result) if result else 'nolla'
+        else:
+            return 'Number out of range (1-1000)'
+
+    words = []
+    parts = input_str.split()
+    for part in parts:
+        if part.isdigit():
+            words.append(convert_number_to_text(int(part)))
+        else:
+            words.append(part)
+
+    return ' '.join(words)
