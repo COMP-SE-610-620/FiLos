@@ -3,7 +3,7 @@ import './TextBar.css';
 import mic from './mic.png';
 import play from "./play.png";
 
-const VoiceRecorder = ({ sendingMessage }) => {
+const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
   const [audioStream, setAudioStream] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recording, setRecording] = useState(false);
@@ -54,13 +54,25 @@ const VoiceRecorder = ({ sendingMessage }) => {
   };
 
   return (
-    <button className='textbar-mic' onClick={recording ? stopRecording : startRecording}>
-      {recording ? (
-        <img src={play} width={40} height={40} alt="Stop Recording" />
-      ) : (
-        <img src={mic} width={40} height={40} alt="Start Recording" />
-      )}
-    </button>
+    <div>
+      <input
+        type="file"
+        accept="audio/*"
+        style={{ display: 'none' }}
+        onChange={handleFileUpload}
+        id="fileInput"
+      />
+      <button className='textbar-mic' onClick={recording ? stopRecording : startRecording}>
+        {recording ? (
+          <img src={play} width={40} height={40} alt="Stop Recording" />
+        ) : (
+          <img src={mic} width={40} height={40} alt="Start Recording" />
+        )}
+      </button>
+      <button onClick={() => document.getElementById('fileInput').click()}>
+        Upload Audio
+      </button>
+    </div>
   );
 };
 
@@ -78,6 +90,28 @@ class TextBar extends React.Component {
   sendMessageIfEnter = (e) => {
     if (e.keyCode === 13) {
       this.sendMessage(this.input.current.value);
+    }
+  };
+
+  handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      // Specify the filename and content type
+      formData.append('file', file, { filename: 'audio.webm', type: 'audio/webm' });
+  
+      fetch('http://localhost:8000/chat/speech', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Response from FiLOs:', data.response);
+        this.sendMessage(JSON.stringify(data.response));
+      })
+      .catch(error => {
+        console.error('Error sending message:', error);
+      });
     }
   };
 
@@ -100,7 +134,7 @@ class TextBar extends React.Component {
             />
           </div>
           <p><b>or</b></p>
-          <VoiceRecorder sendingMessage={this.sendMessage}/>
+          <VoiceRecorder sendingMessage={this.sendMessage} handleFileUpload={this.handleFileUpload} />
           <p>Speak with FiLOs</p>
         </div>
       );
@@ -115,7 +149,7 @@ class TextBar extends React.Component {
               ref={this.input}
               onKeyDown={this.sendMessageIfEnter}
             />
-            <VoiceRecorder sendingMessage={this.sendMessage}/>
+            <VoiceRecorder sendingMessage={this.sendMessage} handleFileUpload={this.handleFileUpload} />
           </div>
         </div>
       );
