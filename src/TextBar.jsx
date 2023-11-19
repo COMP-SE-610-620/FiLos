@@ -11,20 +11,24 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
 
   const startRecording = async () => {
     try {
+      setAudioChunks([]);
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setAudioStream(stream);
-      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' }); // Specify MIME type
-      setMediaRecorder(recorder);
+      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });      
 
       recorder.ondataavailable = (e) => {
-        setAudioChunks((chunks) => [...chunks, e.data]);
+        if (e.data.size > 0) {
+          setAudioChunks((prevChunks) => [...prevChunks, e.data]);
+        }
       };
 
       recorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        console.log('Recorded Blob:', audioBlob);
+
         const formData = new FormData();
         formData.append('file', audioBlob, 'audio.webm');
-      
+
         fetch('http://localhost:8000/chat/speech', {
           method: 'POST',
           body: formData,
@@ -32,12 +36,13 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
         .then(response => response.json())
         .then(data => {
           console.log('Response from FiLOs:', data.response);
-          sendingMessage(JSON.stringify(data.response));
+          sendingMessage(data.response + "?");
         })
         .catch(error => {
           console.error('Error sending message:', error);
         });
       };
+      setMediaRecorder(recorder);
       recorder.start();
       setRecording(true);
     } catch (error) {
@@ -53,26 +58,24 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
     }
   };
 
-  return (
-    <div>
-      <input
+  /*<input
         type="file"
         accept="audio/*"
         style={{ display: 'none' }}
         onChange={handleFileUpload}
         id="fileInput"
       />
-      <button className='textbar-mic' onClick={recording ? stopRecording : startRecording}>
+      <button onClick={() => document.getElementById('fileInput').click()}>
+        Upload Audio
+      </button>*/
+  return (
+    <button className='textbar-mic' onClick={recording ? stopRecording : startRecording}>
         {recording ? (
           <img src={play} width={40} height={40} alt="Stop Recording" />
         ) : (
           <img src={mic} width={40} height={40} alt="Start Recording" />
         )}
       </button>
-      <button onClick={() => document.getElementById('fileInput').click()}>
-        Upload Audio
-      </button>
-    </div>
   );
 };
 
@@ -107,7 +110,7 @@ class TextBar extends React.Component {
       .then(response => response.json())
       .then(data => {
         console.log('Response from FiLOs:', data.response);
-        this.sendMessage(JSON.stringify(data.response));
+        this.sendMessage(data.response + "?");
       })
       .catch(error => {
         console.error('Error sending message:', error);
