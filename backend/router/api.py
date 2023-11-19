@@ -128,7 +128,26 @@ def finnish_number_to_text(input_str):
     words = []
     parts = input_str.split()
     for part in parts:
-        if part.isdigit():
+        if ',' in part:
+            # Handle decimal numbers with comma (,)
+            int_part, decimal_part = part.split(',')
+            try:
+                int_text = convert_number_to_text(int(int_part))
+                decimal_text = convert_number_to_text(int(decimal_part))
+                words.append(f"{int_text} ja {decimal_text}")
+            except ValueError:
+                words.append(part)  # Handle cases where conversion to int fails
+        elif '.' in part:
+            # Handle decimal numbers with dot (.)
+            int_part, decimal_part = part.split('.')
+            try:
+                int_text = convert_number_to_text(int(int_part))
+                decimal_text = convert_number_to_text(int(decimal_part))
+                words.append(f"{int_text} ja {decimal_text}")
+            except ValueError:
+                words.append(part)  # Handle cases where conversion to int fails
+        elif part.isdigit():
+            # Handle integer numbers
             words.append(convert_number_to_text(int(part)))
         else:
             words.append(part)
