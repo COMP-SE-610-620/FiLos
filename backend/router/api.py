@@ -55,10 +55,11 @@ async def process_speech_input(file: UploadFile = File(...)):
     
     asr_service = SpeechRecognitionService()
     converted_text = asr_service.transcribe_audio(audio_data)
-    
+    converted_text_lower = converted_text.lower()
+
     # # Get response from TextGenerationService
     # response = text_generation_service.answer_question(converted_text)
-    return {"response": converted_text}
+    return {"response": converted_text_lower}
 
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
