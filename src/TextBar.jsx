@@ -58,24 +58,27 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
     }
   };
 
-  /*<input
+
+  return (
+    <div>
+      <input
         type="file"
         accept="audio/*"
         style={{ display: 'none' }}
         onChange={handleFileUpload}
         id="fileInput"
       />
-      <button onClick={() => document.getElementById('fileInput').click()}>
-        Upload Audio
-      </button>*/
-  return (
-    <button className='textbar-mic' onClick={recording ? stopRecording : startRecording}>
+      <button className='textbar-mic' onClick={recording ? stopRecording : startRecording}>
         {recording ? (
           <img src={play} width={40} height={40} alt="Stop Recording" />
         ) : (
           <img src={mic} width={40} height={40} alt="Start Recording" />
         )}
       </button>
+      <button onClick={() => document.getElementById('fileInput').click()}>
+        Upload Audio
+      </button>
+    </div>
   );
 };
 
