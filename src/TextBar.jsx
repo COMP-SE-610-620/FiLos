@@ -15,6 +15,7 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setAudioStream(stream);
       const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });      
+      let audioElement;
 
       recorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
@@ -25,6 +26,20 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
       recorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
         console.log('Recorded Blob:', audioBlob);
+
+        // Create a Blob URL and set it as the source for the Audio element
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audioElement = new Audio(audioUrl);
+        audioElement.src = audioUrl;
+
+        // Download the audio file
+        const downloadLink = document.createElement('a');
+        downloadLink.href = audioUrl;
+        downloadLink.download = 'recorded_audio.wav'; // Change the filename and type
+        downloadLink.click();
+
+        // Play the recorded audio
+        audioElement.play();
 
         const formData = new FormData();
         formData.append('file', audioBlob, 'audio.webm');
