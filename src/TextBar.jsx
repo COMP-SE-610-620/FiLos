@@ -86,6 +86,7 @@ class TextBar extends React.Component {
   constructor(props) {
     super(props);
     this.input = React.createRef();
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   sendMessage(prompt) {
