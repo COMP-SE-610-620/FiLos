@@ -7,36 +7,29 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
   const [audioStream, setAudioStream] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recording, setRecording] = useState(false);
-  const [audioChunks, setAudioChunks] = useState([]);
 
   const startRecording = async () => {
     try {
-      setAudioChunks([]);
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setAudioStream(stream);
-      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });      
+      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });   
+      let chunks = [];   
       let audioElement;
 
       recorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
-          setAudioChunks((prevChunks) => [...prevChunks, e.data]);
+          chunks.push(e.data);
         }
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
         console.log('Recorded Blob:', audioBlob);
 
         // Create a Blob URL and set it as the source for the Audio element
         const audioUrl = URL.createObjectURL(audioBlob);
         const audioElement = new Audio(audioUrl);
         audioElement.src = audioUrl;
-
-        // Download the audio file
-        const downloadLink = document.createElement('a');
-        downloadLink.href = audioUrl;
-        downloadLink.download = 'recorded_audio.wav'; // Change the filename and type
-        downloadLink.click();
 
         // Play the recorded audio
         audioElement.play();
