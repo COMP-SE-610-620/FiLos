@@ -8,8 +8,7 @@ from num2words import num2words
 
 
 from services import (
-    SpeechRecognitionService,
-    APISpeechRecognition,
+    LocalSpeechRecognition,
     TextToSpeechService,
     TextGenerationService,
 )
@@ -18,9 +17,7 @@ router = APIRouter()
 
 # Instantiate the TextGenerationService
 text_generation_service = TextGenerationService()
-asr_service = SpeechRecognitionService()  # Instantiate the service once
-api_service = APISpeechRecognition()  # Instantiate the service once
-use_inference_api = True
+local_asr_service = LocalSpeechRecognition()
 
 @router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -49,15 +46,7 @@ async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
         temp_audio_path = "temp_audio.wav"
         with open(temp_audio_path, "wb") as temp_audio:
             temp_audio.write(audio.file.read())
-        # Transcribe the audio using the selected service
-        if use_inference_api:
-            converted_text = api_service.transcribe_audio_api(temp_audio_path)
-        else:
-            # Read the audio file using librosa
-            audio_data, sample_rate = librosa.load(temp_audio_path, sr=None)
-            audio_tensor = torch.tensor(audio_data)
-            converted_text = asr_service.transcribe_audio(audio_tensor)
-
+        converted_text = local_asr_service.transcribe_audio(temp_audio_path)
         converted_text_lower = converted_text.lower()
         return JSONResponse(content={'response': converted_text_lower}, status_code=200)
 

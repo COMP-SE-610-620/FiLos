@@ -3,64 +3,32 @@ import torch
 import requests
 from pydub import AudioSegment
 from pydub.playback import play
+import librosa
 
-MODEL_PATH = "jonatasgrosman/wav2vec2-large-xlsr-53-finnish"
-##private
-API_URL = "https://api-inference.huggingface.co/models/jonatasgrosman/wav2vec2-large-xlsr-53-finnish"
-HEADERS = {"Authorization": "Bearer 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"}
+LANG_ID = "fi"
+MODEL_ID = "jonatasgrosman/wav2vec2-large-xlsr-53-finnish"
 
-class SpeechRecognitionService:
-    """
-    Service for transcribing audio data using the Wav2Vec2 model.
+class LocalSpeechRecognition:
+    @staticmethod
+    def transcribe_audio(audio_file_path: str) -> str:
 
-    Attributes:
-        processor (Wav2Vec2Processor): Processor for the Wav2Vec2 model.
-        model (Wav2Vec2ForCTC): Pre-trained Wav2Vec2 model for audio transcription.
-    """
+        # Replace 'your_audio_file.wav' with the path to your audio file.
+        AUDIO_FILE_PATH = audio_file_path
 
-    def __init__(self):
-        """
-        Initialize the SpeechRecognitionService with pre-trained models.
-        """
-        self.processor = Wav2Vec2Processor.from_pretrained(MODEL_PATH)
-        self.model = Wav2Vec2ForCTC.from_pretrained(MODEL_PATH)
+        processor = Wav2Vec2Processor.from_pretrained(MODEL_ID)
+        model = Wav2Vec2ForCTC.from_pretrained(MODEL_ID)
 
-    def transcribe_audio(self, audio_data: torch.Tensor) -> str:
-        """
-        Transcribe audio data into text.
+        # Load the audio file
+        speech_array, sampling_rate = librosa.load(AUDIO_FILE_PATH, sr=16_000)
 
-        Args:
-            audio_data (torch.Tensor): Audio data as a PyTorch tensor.
-
-        Returns:
-            str: Transcribed text from the audio data.
-        """
-        audio_tensor = audio_data
-        input_features = self.processor(audio_tensor, return_tensors="pt")
+        # Preprocess the input
+        inputs = processor(speech_array, sampling_rate=16_000, return_tensors="pt", padding=True)
 
         with torch.no_grad():
-            output = self.model(**input_features)
+            logits = model(inputs.input_values, attention_mask=inputs.attention_mask).logits
 
-        predicted_ids = torch.argmax(output.logits, dim=-1)
-        transcription = self.processor.batch_decode(predicted_ids)
+        predicted_ids = torch.argmax(logits, dim=-1)
+        predicted_sentence = processor.batch_decode(predicted_ids)[0]
 
-        return transcription[0]
-
-class APISpeechRecognition:
-    @staticmethod
-    def transcribe_audio_api(audio_file_path: str) -> str:
-        flac_filename = "converted_audio.flac"
-        APISpeechRecognition.convert_to_flac(audio_file_path, flac_filename)
-
-        with open(flac_filename, "rb") as f:
-            data = f.read()
-
-        response = requests.post(API_URL, headers=HEADERS, data=data)
-        result = response.json()
-
-        return result.get("text", "")
-
-    @staticmethod
-    def convert_to_flac(input_file, output_file):
-        audio = AudioSegment.from_file(input_file)
-        audio.export(output_file, format="flac")
+        print("Predicted Sentence:", predicted_sentence)
+        return predicted_sentence
