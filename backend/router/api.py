@@ -4,6 +4,8 @@ import librosa.display
 import os
 import torch
 from fastapi.responses import JSONResponse
+from num2words import num2words
+
 
 from services import (
     SpeechRecognitionService,
@@ -75,86 +77,20 @@ async def text_to_speech(text_input: str):
 
 
 def finnish_number_to_text(input_str):
-    def convert_number_to_text(number):
-        if number == 0:
-            return 'nolla'
-
-        finnish_numbers = {
-            1: 'yksi',
-            2: 'kaksi',
-            3: 'kolme',
-            4: 'neljä',
-            5: 'viisi',
-            6: 'kuusi',
-            7: 'seitsemän',
-            8: 'kahdeksan',
-            9: 'yhdeksän',
-            10: 'kymmenen',
-            11: 'yksitoista',
-            12: 'kaksitoista',
-            13: 'kolmetoista',
-            14: 'neljätoista',
-            15: 'viisitoista',
-            16: 'kuusitoista',
-            17: 'seitsemäntoista',
-            18: 'kahdeksantoista',
-            19: 'yhdeksäntoista',
-            20: 'kaksikymmentä',
-            30: 'kolmekymmentä',
-            40: 'neljäkymmentä',
-            50: 'viisikymmentä',
-            60: 'kuusikymmentä',
-            70: 'seitsemänkymmentä',
-            80: 'kahdeksankymmentä',
-            90: 'yhdeksänkymmentä',
-            100: 'sata',
-            200: 'kaksisataa',
-            300: 'kolmesataa',
-            400: 'neljäsataa',
-            500: 'viisisataa',
-            600: 'kuusisataa',
-            700: 'seitsemänsataa',
-            800: 'kahdeksansataa',
-            900: 'yhdeksänsataa',
-            1000: 'tuhat'
-        }
-
-        if 1 <= number <= 1000:
-            result = []
-            for base in sorted(finnish_numbers.keys(), reverse=True):
-                count = number // base
-                if count:
-                    result.append(finnish_numbers[base])
-                    number %= base
-
-            return ' '.join(result) if result else 'nolla'
-        else:
-            return 'Number out of range (1-1000)'
-
     words = []
     parts = input_str.split()
+
     for part in parts:
-        if ',' in part:
-            # Handle decimal numbers with comma (,)
-            int_part, decimal_part = part.split(',')
+        if ',' in part or '.' in part:
+            # Handle decimal numbers with comma (,) or dot (.)
             try:
-                int_text = convert_number_to_text(int(int_part))
-                decimal_text = convert_number_to_text(int(decimal_part))
-                words.append(f"{int_text} ja {decimal_text}")
-            except ValueError:
-                words.append(part)  # Handle cases where conversion to int fails
-        elif '.' in part:
-            # Handle decimal numbers with dot (.)
-            int_part, decimal_part = part.split('.')
-            try:
-                int_text = convert_number_to_text(int(int_part))
-                decimal_text = convert_number_to_text(int(decimal_part))
-                words.append(f"{int_text} ja {decimal_text}")
+                decimal_text = ' ja '.join([num2words(int(num), lang='fi') for num in part.split(',')])
+                words.append(decimal_text)
             except ValueError:
                 words.append(part)  # Handle cases where conversion to int fails
         elif part.isdigit():
             # Handle integer numbers
-            words.append(convert_number_to_text(int(part)))
+            words.append(num2words(int(part), lang='fi'))
         else:
             words.append(part)
 
