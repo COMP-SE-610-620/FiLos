@@ -26,13 +26,13 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
         const audioBlob = new Blob(chunks, { type: 'audio/wav' }); // Change type to 'audio/wav'
         console.log('Recorded Blob:', audioBlob);
       
-        // Create a Blob URL and set it as the source for the Audio element
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audioElement = new Audio(audioUrl);
-        audioElement.src = audioUrl;
+        // // Create a Blob URL and set it as the source for the Audio element
+        // const audioUrl = URL.createObjectURL(audioBlob);
+        // const audioElement = new Audio(audioUrl);
+        // audioElement.src = audioUrl;
       
-        // Play the recorded audio
-        audioElement.play();
+        // // Play the recorded audio
+        // audioElement.play();
       
         const formData = new FormData();
         formData.append('audio', audioBlob, 'audio.wav'); // Change field name to 'audio' and filename to 'audio.wav'
