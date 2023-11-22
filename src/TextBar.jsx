@@ -23,20 +23,20 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+        const audioBlob = new Blob(chunks, { type: 'audio/wav' }); // Change type to 'audio/wav'
         console.log('Recorded Blob:', audioBlob);
-
+      
         // Create a Blob URL and set it as the source for the Audio element
         const audioUrl = URL.createObjectURL(audioBlob);
         const audioElement = new Audio(audioUrl);
         audioElement.src = audioUrl;
-
+      
         // Play the recorded audio
         audioElement.play();
-
+      
         const formData = new FormData();
-        formData.append('file', audioBlob, 'audio.webm');
-
+        formData.append('audio', audioBlob, 'audio.wav'); // Change field name to 'audio' and filename to 'audio.wav'
+      
         fetch('http://localhost:8000/chat/speech', {
           method: 'POST',
           body: formData,
@@ -50,6 +50,7 @@ const VoiceRecorder = ({ sendingMessage, handleFileUpload }) => {
           console.error('Error sending message:', error);
         });
       };
+      
       setMediaRecorder(recorder);
       recorder.start();
       setRecording(true);
@@ -112,11 +113,11 @@ class TextBar extends React.Component {
     const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
-      // Specify the filename and content type
-      formData.append('file', file, { filename: 'audio.webm', type: 'audio/webm' });
+      // Use the correct field name ('audio') and content type
+      formData.append('audio', file, { filename: 'audio.wav', type: 'audio/wav' });
   
       fetch('http://localhost:8000/chat/speech', {
-        method: 'POST',
+          method: 'POST',
         body: formData,
       })
       .then(response => response.json())
@@ -129,6 +130,7 @@ class TextBar extends React.Component {
       });
     }
   };
+  
 
   render() {
     if (this.props.landing) {

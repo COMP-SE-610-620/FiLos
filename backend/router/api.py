@@ -1,11 +1,13 @@
 from fastapi import APIRouter, File, WebSocket, UploadFile, Form, Response
-import soundfile as sf
-import io
+import librosa
+import librosa.display
 import os
-from pydub import AudioSegment
+import torch
+from fastapi.responses import JSONResponse
 
 from services import (
     SpeechRecognitionService,
+    APISpeechRecognition,
     TextToSpeechService,
     TextGenerationService,
 )
@@ -14,7 +16,9 @@ router = APIRouter()
 
 # Instantiate the TextGenerationService
 text_generation_service = TextGenerationService()
-
+asr_service = SpeechRecognitionService()  # Instantiate the service once
+api_service = APISpeechRecognition()  # Instantiate the service once
+use_inference_api = True
 
 @router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -37,29 +41,30 @@ async def process_text_input(text_input: str = Form(...)):
 
 
 @router.post("/chat/speech")
-async def process_speech_input(file: UploadFile = File(...)):
-    audio_bytes = await file.read()
-    
-    if file.content_type == "audio/webm":
-        # Save the audio data to a local file
-        with open("temp.webm", "wb") as fp:
-            fp.write(audio_bytes)
-        audio = AudioSegment.from_file("temp.webm", format="webm")
-        audio.export("temp.wav", format="wav")
-        audio_data = sf.read("temp.wav")[0]
-        # Delete the temporary files after use
-        os.remove("temp.webm")
-        os.remove("temp.wav")
-    else:
-        audio_data = sf.read(io.BytesIO(audio_bytes))[0]
-    
-    asr_service = SpeechRecognitionService()
-    converted_text = asr_service.transcribe_audio(audio_data)
-    converted_text_lower = converted_text.lower()
+async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
+    try:
+        # Save the uploaded audio file temporarily
+        temp_audio_path = "temp_audio.wav"
+        with open(temp_audio_path, "wb") as temp_audio:
+            temp_audio.write(audio.file.read())
+        # Transcribe the audio using the selected service
+        if use_inference_api:
+            converted_text = api_service.transcribe_audio_api(temp_audio_path)
+        else:
+            # Read the audio file using librosa
+            audio_data, sample_rate = librosa.load(temp_audio_path, sr=None)
+            audio_tensor = torch.tensor(audio_data)
+            converted_text = asr_service.transcribe_audio(audio_tensor)
 
-    # # Get response from TextGenerationService
-    # response = text_generation_service.answer_question(converted_text)
-    return {"response": converted_text_lower}
+        converted_text_lower = converted_text.lower()
+        return JSONResponse(content={'response': converted_text_lower}, status_code=200)
+
+    except Exception as e:
+        return JSONResponse(content={'error': str(e)}, status_code=500)
+
+    finally:
+        # Clean up: remove the temporary audio file
+        os.remove(temp_audio_path)
 
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
