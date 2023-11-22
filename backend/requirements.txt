@@ -165,8 +165,6 @@ sniffio==1.3.0
 soundfile==0.12.1
 soupsieve==2.3.2.post1
 sox==1.4.1
-# Editable install with no version control (speechbrain==0.5.14)
--e /Users/chenbingxiang/Library/CloudStorage/GoogleDrive-bingxiangch@gmail.com/我的云端硬盘/Colab Notebooks/FinGPT/speechbrain
 stack-data==0.6.2
 starlette==0.27.0
 sympy==1.12
