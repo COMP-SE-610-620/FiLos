@@ -19,6 +19,7 @@ router = APIRouter()
 text_generation_service = TextGenerationService()
 local_asr_service = LocalSpeechRecognition()
 
+
 @router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -47,39 +48,18 @@ async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
         with open(temp_audio_path, "wb") as temp_audio:
             temp_audio.write(audio.file.read())
         converted_text = local_asr_service.transcribe_audio(temp_audio_path)
-        return JSONResponse(content={'response': converted_text}, status_code=200)
+        return JSONResponse(content={"response": converted_text}, status_code=200)
 
     except Exception as e:
-        return JSONResponse(content={'error': str(e)}, status_code=500)
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
     finally:
         # Clean up: remove the temporary audio file
         os.remove(temp_audio_path)
 
+
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
     tts_service = TextToSpeechService()
-    finnish_text = finnish_number_to_text(text_input)
-    audio_data = tts_service.text_to_speech(finnish_text)
+    audio_data = tts_service.text_to_speech(text_input)
     return Response(content=audio_data.getvalue(), media_type="audio/wav")
-
-
-def finnish_number_to_text(input_str):
-    words = []
-    parts = input_str.split()
-
-    for part in parts:
-        if ',' in part or '.' in part:
-            # Handle decimal numbers with comma (,) or dot (.)
-            try:
-                decimal_text = ' ja '.join([num2words(int(num), lang='fi') for num in part.split(',')])
-                words.append(decimal_text)
-            except ValueError:
-                words.append(part)  # Handle cases where conversion to int fails
-        elif part.isdigit():
-            # Handle integer numbers
-            words.append(num2words(int(part), lang='fi'))
-        else:
-            words.append(part)
-
-    return ' '.join(words)
