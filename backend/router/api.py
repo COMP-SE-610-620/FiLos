@@ -47,8 +47,7 @@ async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
         with open(temp_audio_path, "wb") as temp_audio:
             temp_audio.write(audio.file.read())
         converted_text = local_asr_service.transcribe_audio(temp_audio_path)
-        converted_text_lower = converted_text.lower()
-        return JSONResponse(content={'response': converted_text_lower}, status_code=200)
+        return JSONResponse(content={'response': converted_text}, status_code=200)
 
     except Exception as e:
         return JSONResponse(content={'error': str(e)}, status_code=500)
