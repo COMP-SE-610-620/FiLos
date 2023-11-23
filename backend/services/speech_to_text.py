@@ -6,7 +6,7 @@ from pydub.playback import play
 import librosa
 
 LANG_ID = "fi"
-MODEL_ID = "jonatasgrosman/wav2vec2-large-xlsr-53-finnish"
+MODEL_ID = "Finnish-NLP/wav2vec2-large-uralic-voxpopuli-v2-finnish"
 
 class LocalSpeechRecognition:
     @staticmethod
