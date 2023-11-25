@@ -15,6 +15,7 @@ RUN pip install TTS
 
 # Install additional dependencies for audio processing
 RUN apt-get update && apt-get install -y libsndfile1
+RUN apt-get -y update && apt-get -y upgrade && apt-get install -y ffmpeg
 
 ARG MODEL_DIR=/backend/tts_models
 

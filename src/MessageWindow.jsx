@@ -7,20 +7,12 @@ let source;
 const Message = ({ text, self }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const playAudio = (buffer) => {
-    const audioContext = new AudioContext();
-    source = audioContext.createBufferSource();
-    source.buffer = buffer;
-    source.connect(audioContext.destination);    
-    source.start(0);
-    source.onended = () => {
-      setIsPlaying(false);
-    };
-  };
+  const [cachedBlobUrl, setBlobUrl] = useState(null);
 
   const stopPlaying = () => {
-    source.stop();
+    source.pause();
+    source.currentTime = 0;
+    setIsPlaying(false);
     setIsLoading(false);
   };
 
@@ -28,57 +20,77 @@ const Message = ({ text, self }) => {
     setIsPlaying(true);
     setIsLoading(true);
     const url = new URL('http://localhost:8000/text-to-speech');
-    url.searchParams.append('text_input', text);    
+    url.searchParams.append('text_input', text);
+
+    // Check if the file is already in the cache
+    if (cachedBlobUrl) {
+      playAudio(cachedBlobUrl);
+      setIsLoading(false);
+      return;
+    }
 
     fetch(url.toString())
       .then(response => response.blob())
-      .then(blob => {        
-        const fileReader = new FileReader();
-        fileReader.onload = function () {
-          const audioContext = new AudioContext();
-          const arrayBuffer = this.result;
-          audioContext.decodeAudioData(arrayBuffer, playAudio);
-        };
-        fileReader.readAsArrayBuffer(blob);
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+
+        // Store the Blob URL in the cache variable
+        setBlobUrl(blobUrl);
+
+        playAudio(blobUrl);
         setIsLoading(false);
       })
       .catch(error => {
         console.error('Error in GET request:', error);
+        setIsLoading(false);
       });
+  };
+
+  // Function to play audio from Blob URL
+  const playAudio = (blobUrl) => {
+    source = new Audio(blobUrl);
+    source.play().then(() => {
+      setIsPlaying(true);
+    });
+    source.addEventListener('ended', onAudioEnded);
+  };
+
+  const onAudioEnded = () => {
+    setIsPlaying(false);
   };
 
   return (
     <>
-  <div className={'message' + (self ? ' message-self' : '')}>    
-    <div className='message-text'>{text}</div>            
-  </div>
-  {!self ?
-    (
-      isPlaying ? 
-      (
-        isLoading ?
-        <div className={'audio-field'}>      
-        <div className='audio-text'>One moment...</div>
-        </div>
-        :
-        <div className={'audio-field'}>    
-        <button className='audio-play' onClick={() => stopPlaying()}>
-          <img src={stop} width={20} height={20} alt="Stop button"/>
-        </button>
-        <div className='audio-text'>Stop the audio</div>
-        </div>
-      )
-      :
-      <div className={'audio-field'}>    
-      <button className='audio-play' onClick={() => speakThis(text)}>
-        <img src={play} width={20} height={20} alt="Play button"/>
-      </button>
-      <div className='audio-text'>Read this out loud</div>
+      <div className={'message' + (self ? ' message-self' : '')}>
+        <div className='message-text'>{text}</div>
       </div>
-    )
-    : null
-  }
-  </>
+      {!self ?
+        (
+          isPlaying ?
+            (
+              isLoading ?
+                <div className={'audio-field'}>
+                  <div className='audio-text'>One moment...</div>
+                </div>
+                :
+                <div className={'audio-field'}>
+                  <button className='audio-play' onClick={() => stopPlaying()}>
+                    <img src={stop} width={20} height={20} alt="Stop button" />
+                  </button>
+                  <div className='audio-text'>Stop the audio</div>
+                </div>
+            )
+            :
+            <div className={'audio-field'}>
+              <button className='audio-play' onClick={() => speakThis(text)}>
+                <img src={play} width={20} height={20} alt="Play button" />
+              </button>
+              <div className='audio-text'>Read this out loud</div>
+            </div>
+        )
+        : null
+      }
+    </>
   );
 };
 
