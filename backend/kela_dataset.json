@@ -46,5 +46,17 @@
     {
         "question": "Miten käy, jos ylitän vuositulorajan?",
         "answer": "Jos vuositulorajasi ylittyy esitäytetyn veroilmoituksen eli verotuksen ennakkotietojen mukaan, voit joutua palauttamaan opintotukea. Tässä tilanteessa Kela lähettää sinulle asiasta viestin, jossa kerrotaan myös palautuksen määräajasta.  Viesti lähetetään huhtikuussa niille opintotuen saajille, jotka ovat antaneet Kelalle luvan viestien lähettämiseen. Voit antaa luvan OmaKelassa kohdassa Päivitä omia tietojasi."
+    },
+    {
+        "question": "Mitä jos sairastun opintojeni aikana?",
+        "answer": "Jos et pysty opiskelemaan sairauden vuoksi, voit jäädä sairauslomalle. Sen aikana voit saada sairauspäivärahaa. Jos opintosi keskeytyvät ja opiskelet toisen asteen oppilaitoksessa, ilmoita opintojesi keskeytyminen Kelalle. Jos opiskelet korkeakoulussa ja opintosi eivät edisty, harkitse, kannattaako sinun kuluttaa opintotukikuukausia. Jos nostat opintotukea ja opintosuorituksia kertyy liian vähän, voit joutua antamaan Kelalle selvityksen opintojesi edistymisestä. Selvitystä varten tarvitset lääkärintodistuksen sairaudestasi. Lääkärintodistus tai vastaava muu todistus voi olla tarpeen myös siinä tilanteessa, että opintotukiaikasi loppuu ja joudut hakemaan jatkoa opintotuellesi."
+    },
+    {
+        "question": "Mitä sairauspäiväraha on?",
+        "answer": "Sairauspäiväraha korvaa alle vuoden kestävän työkyvyttömyyden aiheuttamaa ansionmenetystä. Sairauspäivärahaa varten tarvitaan lääkärintodistus. A-lääkärintodistuksella voi saada sairauspäivärahaa yleensä enintään 60 arkipäivää. Sen jälkeen tarvitaan B-lääkärinlausunto tai muu selvitys työkyvyttömyydestä. Lisäselvityksiä saatetaan pyytää jo aiemmin. Sairauspäivärahaa maksetaan omavastuuajan jälkeen. Omavastuuaika on yleensä sairastumispäivä ja sitä seuraavat 9 arkipäivää. "
+    },
+    {
+        "question": "Kuinka paljon voin saada sairauspäivärahaa?",
+        "answer": "Sairauspäivärahaa maksetaan enintään 300 arkipäivältä eli noin vuoden ajan. Saat sairauspäivärahaa enintään sen kuukauden loppuun, jota seuraavan kuukauden aikana 300 päivärahapäivää tulisi täyteen. Enimmäisaikaan lasketaan mukaan edeltäneeltä 2 vuodelta kaikki päivät, joilta sinulla on ollut oikeus Kelan sairauspäivärahaan. Mukaan lasketaan siis myös ne päivät, joina olet ollut työkyvytön mutta joina sinulle ei esimerkiksi vuositulojen vähyyden vuoksi ole maksettu sairauspäivärahaa."
     }
 ]
