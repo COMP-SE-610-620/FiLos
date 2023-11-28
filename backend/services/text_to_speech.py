@@ -1,13 +1,10 @@
 import re
 import numpy as np
 import io
+import os
 from TTS.utils.synthesizer import Synthesizer
 from scipy.io.wavfile import write
 from num2words import num2words
-
-MODEL_PATH = "/root/.local/share/tts/tts_models--fi--css10--vits/model_file.pth.tar"
-CONFIG_PATH = "/root/.local/share/tts/tts_models--fi--css10--vits/config.json"
-
 
 def convert_numbers_to_text(text, lang="fi"):
     """
@@ -29,6 +26,14 @@ def convert_numbers_to_text(text, lang="fi"):
 
     return number_pattern.sub(replace_with_words, text)
 
+def find_model_folder(start_path, target_folder):
+    for root, dirs, files in os.walk(start_path):
+        if target_folder in dirs:
+            return os.path.join(root, target_folder)
+
+    # If the folder is not found
+    return None
+
 
 class TextToSpeechService:
     """
@@ -39,7 +44,10 @@ class TextToSpeechService:
         """
         Initialize the TextToSpeechService with the specified Mozilla TTS model.
         """
-        self.synthesizer = Synthesizer(MODEL_PATH, CONFIG_PATH, use_cuda=False)
+        model_folder_path = find_model_folder("/", "tts_models--fi--css10--vits")
+        model_path = os.path.join(model_folder_path, "model_file.pth.tar")
+        config_path = os.path.join(model_folder_path, "config.json")
+        self.synthesizer = Synthesizer(model_path, config_path, use_cuda=False)
 
     def text_to_speech(self, text: str) -> io.BytesIO:
         """

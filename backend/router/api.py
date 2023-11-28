@@ -15,9 +15,10 @@ from services import (
 
 router = APIRouter()
 
-# Instantiate the TextGenerationService
+
 text_generation_service = TextGenerationService()
 local_asr_service = LocalSpeechRecognition()
+tts_service = TextToSpeechService()
 
 
 @router.websocket("/ws")
@@ -60,6 +61,5 @@ async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
 
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
-    tts_service = TextToSpeechService()
     audio_data = tts_service.text_to_speech(text_input)
     return Response(content=audio_data.getvalue(), media_type="audio/wav")
