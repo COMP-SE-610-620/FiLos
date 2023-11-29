@@ -136,3 +136,5 @@ weasel==0.3.4
 Werkzeug==3.0.1
 yarl==1.9.3
 zipp==3.17.0
+uvicorn==0.23.2
+sentence-transformers
