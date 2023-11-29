@@ -1,7 +1,7 @@
 import requests
 import unittest
 
-# assuming your FastAPI app is running on localhost:8000
+# base url
 url = 'http://localhost:8000'
 
 class TestAPI(unittest.TestCase):

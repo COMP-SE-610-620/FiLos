@@ -70,3 +70,19 @@ uvicorn main:app --reload
 Once the server is running, it will be accessible at http://127.0.0.1:8000/.
 
 API Documentation will be accessible at http://127.0.0.1:8000/docs/
+
+
+## Running API Tests
+
+To ensure that the API is functioning as expected, you can run the provided test suite. 
+
+First, navigate to the `tests` directory:
+
+```bash
+cd backend/tests
+```
+Then, run the test_api.py script using Python:
+```bash
+python test_api.py
+```
+This will execute all the test cases defined in the test_api.py file. If all the tests pass, it means that API is working correctly. If any test fails, error message will show
