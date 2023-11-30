@@ -1,0 +1,238 @@
+[
+    {
+        "question": "Kuka voi saada opintotukea?",
+        "answer_id": 0
+    },
+    {
+        "question": "Ketkä voivat saada opintotukea?",
+        "answer_id": 0
+    },
+    {
+        "question": "Voinko saada opintotukea?",
+        "answer_id": 0
+    },
+    {
+        "question": "Miten voin saada opintotukea?",
+        "answer_id": 0
+    },
+    {
+        "question": "Kuinka paljon voin saada opintotukea?",
+        "answer_id": 1
+    },
+    {
+        "question": "Miten paljon voin saada opintotukea?",
+        "answer_id": 1
+    },
+    {
+        "question": "Kuinka suuri opintotuki on?",
+        "answer_id": 1
+    },
+    {
+        "question": "Paljonko opintotuki on?",
+        "answer_id": 1
+    },
+    {
+        "question": "Kuka voi saada ateriatukea?",
+        "answer_id": 2
+    },
+    {
+        "question": "Voinko saada ateriatukea?",
+        "answer_id": 2
+    },
+    {
+        "question": "Ketkä saavat ateriatukea?",
+        "answer_id": 2
+    },
+    {
+        "question": "Miten saan ateriatukea?",
+        "answer_id": 2
+    },
+    {
+        "question": "Kuinka suuri ateriatuki on?",
+        "answer_id": 3
+    },
+    {
+        "question": "Miten paljon ateriatuki on?",
+        "answer_id": 3
+    },
+    {
+        "question": "Kuinka paljon voin saada ateriatukea?",
+        "answer_id": 3
+    },
+    {
+        "question": "Miten paljon ateriatukea voin saada?",
+        "answer_id": 3
+    },
+    {
+        "question": "Kuka voi saada yleistä asumistukea?",
+        "answer_id": 4
+    },
+    {
+        "question": "Voinko saada yleistä asumistukea?",
+        "answer_id": 4
+    },
+    {
+        "question": "Voinko saada asumistukea?",
+        "answer_id": 4
+    },
+    {
+        "question": "Kuka saa asumistukea?",
+        "answer_id": 4
+    },
+    {
+        "question": "Ketkä saavat asumistukea?",
+        "answer_id": 4
+    },
+    {
+        "question": "Kuinka saan asumistukea?",
+        "answer_id": 4
+    },
+    {
+        "question": "Kuinka paljon voin saada asumistukea?",
+        "answer_id": 5
+    },
+    {
+        "question": "Kuinka paljon asumistuki on?",
+        "answer_id": 5
+    },
+    {
+        "question": "Paljonko asumistukea voi saada?",
+        "answer_id": 5
+    },
+    {
+        "question": "Kenen täytyy maksaa terveydenhoitomaksu?",
+        "answer_id": 6
+    },
+    {
+        "question": "Pitääkö minun maksaa terveydenhoitomaksu?",
+        "answer_id": 6
+    },
+    {
+        "question": "Mitkä asiat vaikuttavat terveydenhoitomaksun maksuvelvollisuuteen?",
+        "answer_id": 6
+    },
+    {
+        "question": "Olenko velvollinen maksamaan terveydenhoitomaksun?",
+        "answer_id": 6
+    },
+    {
+        "question": "Kuinka paljon terveydenhoitomaksu maksaa?",
+        "answer_id": 7
+    },
+    {
+        "question": "Mitä terveydenhoitomaksu maksaa?",
+        "answer_id": 7
+    },
+    {
+        "question": "Paljonko terveydenhoitomaksu maksaa?",
+        "answer_id": 7
+    },
+    {
+        "question": "Miten käy, jos en maksa terveydenhoitomaksua?",
+        "answer_id": 8
+    },
+    {
+        "question": "Mitä jos en maksa terveydenhoitomaksua?",
+        "answer_id": 8
+    },
+    {
+        "question": "Entä jos en maksa terveydenhoitomaksua?",
+        "answer_id": 8
+    },
+    {
+        "question": "Vaikuttavatko opiskelijan omat tulot opintotukeen?",
+        "answer_id": 9
+    },
+    {
+        "question": "Miten tulot vaikuttavat opintotukeen?",
+        "answer_id": 9
+    },
+    {
+        "question": "Voinko tehdä töitä samalla kun opiskelen?",
+        "answer_id": 10
+    },
+    {
+        "question": "Kuinka paljon voin saada tuloja, jos nostan opintotukea?",
+        "answer_id": 10
+    },
+    {
+        "question": "Kuinka paljon voin saada tuloja vuodessa, jos saan myös opintotukea?",
+        "answer_id": 10
+    },
+    {
+        "question": "Miten käy, jos ylitän vuositulorajan?",
+        "answer_id": 11
+    },
+    {
+        "question": "Mitä jos ylitän vuositulorajani?",
+        "answer_id": 11
+    },
+    {
+        "question": "Mitä jos sairastun opintojeni aikana?",
+        "answer_id": 12
+    },
+    {
+        "question": "Mitä sairauspäiväraha on?",
+        "answer_id": 13
+    },
+    {
+        "question": "Kuinka paljon voin saada sairauspäivärahaa?",
+        "answer_id": 14
+    },
+    {
+        "question": "Mikä on suurin mahdollinen sairauspäiväraha?",
+        "answer_id": 14
+    },
+    {
+        "question": "Mikä on sairauspäivärahan määrä?",
+        "answer_id": 14
+    },
+    {
+        "question": "Opintolaina",
+        "answer_id": 15
+    },
+    {
+        "question": "Mitä on opintolaina?",
+        "answer_id": 15
+    },
+    {
+        "question": "Minkälainen laina opintolaina on?",
+        "answer_id": 15
+    },
+    {
+        "question": "Kuka voi saada opintolainaa?",
+        "answer_id": 16
+    },
+    {
+        "question": "Voinko saada opintolainaa?",
+        "answer_id": 16
+    },
+    {
+        "question": "Missä tilanteissa voin saada lainatakauksen, jos en saa opintorahaa?",
+        "answer_id": 17
+    },
+    {
+        "question": "Missä erityistilanteissa voin saada lainatakauksen?",
+        "answer_id": 17
+    },
+    {
+        "question": "En saa opintotukea, voinko kuitenkin saada opintolainaan takauksen?",
+        "answer_id": 17
+    },
+    {
+        "question": "Milloin lanatakausta ei voi saada?",
+        "answer_id": 18
+    },
+    {
+        "question": "Missä tilanteissa en voi saada lainatakausta?",
+        "answer_id": 18
+    },
+    {
+        "question": "Voinko saada opintotukea kesäopintoihin?",
+        "answer_id": 19
+    },
+    {
+        "question": "Onko opintotukea mahdollista saada kesäopintoihin?",
+        "answer_id": 19
+    }
+]
