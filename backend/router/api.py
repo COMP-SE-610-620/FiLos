@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, WebSocket, UploadFile, Form, Response
+from fastapi import APIRouter, File, WebSocket, UploadFile, Form, Response, HTTPException
 import librosa
 import librosa.display
 import os
@@ -36,6 +36,9 @@ def hello():
 
 @router.post("/chat/text")
 async def process_text_input(text_input: str = Form(...)):
+    if not text_input:
+        raise HTTPException(status_code=422, detail="Missing input data: 'text_input' is required")
+
     # Get response from TextGenerationService for text input
     response = text_generation_service.answer_question(text_input)
     return {"question": text_input, "response": response}
@@ -61,5 +64,7 @@ async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
 
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
+    if not text_input:
+        raise HTTPException(status_code=422, detail="Missing input text: 'text_input' is required")
     audio_data = tts_service.text_to_speech(text_input)
     return Response(content=audio_data.getvalue(), media_type="audio/wav")
