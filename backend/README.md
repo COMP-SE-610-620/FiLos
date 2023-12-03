@@ -10,7 +10,7 @@
   - `notebooks`: Jupyter notebooks used for downloading and saving Hugging Face models.
     - `download_model.ipynb`: Notebook for downloading and saving models.
   - `main.py`: The main entry point of the application, responsible for initializing and running the FastAPI server.
-  - `Testing`: The tests folder contains unit tests ensuring the reliability of our backend components.
+  - `tests`: The tests folder contains unit tests ensuring the reliability of our backend components.
   - `Dockerization`: To deploy our backend, use the included Dockerfile to containerize our application.
 ## Models
 ### speech-to-text (Finnish-NLP Group)
