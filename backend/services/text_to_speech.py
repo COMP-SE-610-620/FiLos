@@ -29,15 +29,6 @@ def convert_numbers_to_text(text, lang="fi"):
 
     return number_pattern.sub(replace_with_words, text)
 
-def find_model_folder(start_path, target_folder):
-    for root, dirs, files in os.walk(start_path):
-        if target_folder in dirs:
-            return os.path.join(root, target_folder)
-
-    # If the folder is not found
-    return None
-
-
 class TextToSpeechService:
     """
     Service for converting text to speech using the Mozilla TTS model.
