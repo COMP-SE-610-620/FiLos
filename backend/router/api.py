@@ -1,16 +1,24 @@
-from fastapi import APIRouter, File, WebSocket, UploadFile, Form, Response
-import soundfile as sf
-import io
+from fastapi import APIRouter, File, WebSocket, UploadFile, Form, Response, HTTPException
+import librosa
+import librosa.display
+import os
+import torch
+from fastapi.responses import JSONResponse
+from num2words import num2words
+
+
 from services import (
-    SpeechRecognitionService,
+    LocalSpeechRecognition,
     TextToSpeechService,
     TextGenerationService,
 )
 
 router = APIRouter()
 
-# Instantiate the TextGenerationService
+
 text_generation_service = TextGenerationService()
+local_asr_service = LocalSpeechRecognition()
+tts_service = TextToSpeechService()
 
 
 @router.websocket("/ws")
@@ -28,27 +36,35 @@ def hello():
 
 @router.post("/chat/text")
 async def process_text_input(text_input: str = Form(...)):
+    if not text_input:
+        raise HTTPException(status_code=422, detail="Missing input data: 'text_input' is required")
+
     # Get response from TextGenerationService for text input
     response = text_generation_service.answer_question(text_input)
     return {"question": text_input, "response": response}
 
 
 @router.post("/chat/speech")
-async def process_speech_input(file: UploadFile = File(...)):
-    if file.content_type.startswith("audio/"):
-        # Handle audio file input (speech)
-        audio_data = sf.read(io.BytesIO(await file.read()))[0]
-        asr_service = SpeechRecognitionService()
-        converted_text = asr_service.transcribe_audio(audio_data)
-        
-        # Get response from TextGenerationService
-        response = text_generation_service.answer_question(converted_text)
-        return {"question": converted_text, "response": response}
-    else:
-        return {"error": "Invalid input. Provide an audio file with the 'audio/' content type."}
+async def transcribe_audio_endpoint(audio: UploadFile = File(...)):
+    try:
+        # Save the uploaded audio file temporarily
+        temp_audio_path = "temp_audio.wav"
+        with open(temp_audio_path, "wb") as temp_audio:
+            temp_audio.write(audio.file.read())
+        converted_text = local_asr_service.transcribe_audio(temp_audio_path)
+        return JSONResponse(content={"response": converted_text}, status_code=200)
+
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+    finally:
+        # Clean up: remove the temporary audio file
+        os.remove(temp_audio_path)
+
 
 @router.get("/text-to-speech/")
 async def text_to_speech(text_input: str):
-    tts_service = TextToSpeechService()
+    if not text_input:
+        raise HTTPException(status_code=422, detail="Missing input text: 'text_input' is required")
     audio_data = tts_service.text_to_speech(text_input)
     return Response(content=audio_data.getvalue(), media_type="audio/wav")
