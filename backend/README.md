@@ -21,7 +21,7 @@ Our Text Generation model, crafted by the TurkuNLP Research Group, utilizes the 
 - https://huggingface.co/TurkuNLP/sbert-cased-finnish-paraphrase
 ### text-to-speech (mozilla/TTS)
 Our Text-to-Speech model, named tts_models/fi/css10/vits, is part of the mozilla/TTS project, is designed to convert written text into natural-sounding Finnish speech. 
-- https://huggingface.co/facebook/mms-tts-fin.
+- https://github.com/mozilla/TTS.
 
 ## Usage instructions
 
