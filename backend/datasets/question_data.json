@@ -200,7 +200,15 @@
         "answer_id": 15
     },
     {
+        "question": "Milloin voin saada lainatakauksen?",
+        "answer_id": 15
+    },
+    {
         "question": "Kuka voi saada opintolainaa?",
+        "answer_id": 16
+    },
+    {
+        "question": "Ketkä voivat saada opintolainaa?",
         "answer_id": 16
     },
     {
@@ -220,7 +228,7 @@
         "answer_id": 17
     },
     {
-        "question": "Milloin lanatakausta ei voi saada?",
+        "question": "Milloin lainatakausta ei voi saada?",
         "answer_id": 18
     },
     {

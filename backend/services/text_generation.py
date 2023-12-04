@@ -100,7 +100,7 @@ class TextGenerationService:
         # Print corpus_id (same as the question index) and cosine similarity score
         #print(hit)
 
-        if hit["score"] > 0.85:
+        if hit["score"] > 0.87:
             answer_id = self.q_dict[hit["corpus_id"]]
             answer = self.a_dict[answer_id]
             return answer
