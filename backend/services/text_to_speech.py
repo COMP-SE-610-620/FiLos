@@ -1,12 +1,12 @@
 import re
 import numpy as np
 import io
+import os
 from TTS.utils.synthesizer import Synthesizer
 from scipy.io.wavfile import write
 from num2words import num2words
-
-MODEL_PATH = "/root/.local/share/tts/tts_models--fi--css10--vits/model_file.pth.tar"
-CONFIG_PATH = "/root/.local/share/tts/tts_models--fi--css10--vits/config.json"
+import torch
+from TTS.api import TTS
 
 
 def convert_numbers_to_text(text, lang="fi"):
@@ -29,7 +29,6 @@ def convert_numbers_to_text(text, lang="fi"):
 
     return number_pattern.sub(replace_with_words, text)
 
-
 class TextToSpeechService:
     """
     Service for converting text to speech using the Mozilla TTS model.
@@ -39,7 +38,9 @@ class TextToSpeechService:
         """
         Initialize the TextToSpeechService with the specified Mozilla TTS model.
         """
-        self.synthesizer = Synthesizer(MODEL_PATH, CONFIG_PATH, use_cuda=False)
+        # Get device
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.tts = TTS(model_name="tts_models/fi/css10/vits", progress_bar=False).to(device)
 
     def text_to_speech(self, text: str) -> io.BytesIO:
         """
@@ -54,7 +55,7 @@ class TextToSpeechService:
         # Convert numbers in the text to words
         converted_text = convert_numbers_to_text(text)
 
-        wav = self.synthesizer.tts(converted_text)
+        wav = self.tts.tts(converted_text, speaker_wav="audio.wav")
 
         # Convert to 16-bit PCM
         wav = np.int16(wav / np.max(np.abs(wav)) * 32767)
