@@ -8,7 +8,7 @@ from num2words import num2words
 
 
 from services import (
-    LocalSpeechRecognition,
+    SpeechToTextService,
     TextToSpeechService,
     TextGenerationService,
 )
@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 text_generation_service = TextGenerationService()
-local_asr_service = LocalSpeechRecognition()
+local_asr_service = SpeechToTextService()
 tts_service = TextToSpeechService()
 
 

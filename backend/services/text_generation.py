@@ -1,7 +1,7 @@
 import json
-import torch
 from transformers import AutoTokenizer, AutoModel
 from sentence_transformers.util import semantic_search
+from sentence_transformers import SentenceTransformer
 
 MODEL_PATH = "TurkuNLP/sbert-cased-finnish-paraphrase"
 
@@ -17,8 +17,8 @@ class TextGenerationService:
         self.qa_model, self.qa_tokenizer = self.load_qa_model()
         (
             self.questions,
-            self.answers,
-            self.qa_dict,
+            self.q_dict,
+            self.a_dict,
             self.embedded_questions,
         ) = self.load_qa_data()
 
@@ -35,48 +35,40 @@ class TextGenerationService:
 
     def load_qa_data(self):
         """
-        Loads the QA dataset, extracts questions and answers, and embeds the questions.
+        Loads the question and answer datasets, extracts questions and answers, and embeds the questions.
 
         Returns:
-            tuple: Lists of questions, answers, a dictionary mapping questions to answers,
+            tuple: Lists of questions, a dictionary mapping question indexes to answer_ids, a dictionary mapping answer_ids to answers,
                    and embeddings of the questions.
         """
-        qa_dataset_path = "./kela_dataset.json"
-        with open(qa_dataset_path, "r", encoding="utf-8") as file:
-            data = json.load(file)
+        questions_path = "./datasets/question_data.json"
+        answers_path = "./datasets/answer_data.json"
+
+        with open(questions_path, "r", encoding="utf-8") as file:
+            question_data = json.load(file)
+
+        with open(answers_path, "r", encoding="utf-8") as file:
+            answer_data = json.load(file)
 
         questions = []
-        answers = []
-        qa_dict = {}
 
-        for item in data:
-            question = item["question"]
+        # {question index: answer_id}
+        q_dict = {}
+        # {answer_id: answer}
+        a_dict = {}
+
+        for index, item in enumerate(question_data):
+            question = item["question"].lower()
             questions.append(question)
+            q_dict[index] = item["answer_id"]
+
+        for item in (answer_data):
+            answer_id = item["answer_id"]
             answer = item["answer"]
-            answers.append(answer)
-            qa_dict[question] = answer
+            a_dict[answer_id] = answer
 
         embedded_questions = self.sentence_embedding(questions)
-        return questions, answers, qa_dict, embedded_questions
-
-    def mean_pooling(self, model_output, attention_mask):
-        """
-        Performs mean pooling on the model output.
-
-        Args:
-            model_output (torch.Tensor): The output from the transformer model.
-            attention_mask (torch.Tensor): The attention mask for the input.
-
-        Returns:
-            torch.Tensor: The pooled output.
-        """
-        token_embeddings = model_output[0]
-        input_mask_expanded = (
-            attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
-        )
-        return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(
-            input_mask_expanded.sum(1), min=1e-9
-        )
+        return questions, q_dict, a_dict, embedded_questions
 
     def sentence_embedding(self, sentences):
         """
@@ -88,15 +80,9 @@ class TextGenerationService:
         Returns:
             torch.Tensor: The sentence embeddings.
         """
-        encoded_input = self.qa_tokenizer(
-            sentences, padding=True, truncation=True, return_tensors="pt"
-        )
-        with torch.no_grad():
-            model_output = self.qa_model(**encoded_input)
-            sentence_embeddings = self.mean_pooling(
-            model_output, encoded_input["attention_mask"]
-        )
-        return sentence_embeddings
+        model = SentenceTransformer('TurkuNLP/sbert-cased-finnish-paraphrase')
+        embeddings = model.encode(sentences)
+        return embeddings
 
     def answer_question(self, input_question):
         """
@@ -108,14 +94,15 @@ class TextGenerationService:
         Returns:
             str: The answer to the input question.
         """
-        embedded_question = self.sentence_embedding(input_question)
+        embedded_question = self.sentence_embedding(input_question.lower())
         hit = semantic_search(embedded_question, self.embedded_questions, top_k=1)[0][0]
 
-        if hit["score"] > 0.8:
-            closest_question = self.questions[hit["corpus_id"]]
-            if closest_question in self.qa_dict:
-                return self.qa_dict[closest_question]
-            else:
-                return "En valitettavasti osaa vastata kysymykseesi."
+        # Print corpus_id (same as the question index) and cosine similarity score
+        #print(hit)
+
+        if hit["score"] > 0.87:
+            answer_id = self.q_dict[hit["corpus_id"]]
+            answer = self.a_dict[answer_id]
+            return answer
         else:
             return "En valitettavasti osaa vastata kysymykseesi."
